@@ -13,23 +13,28 @@
             const img = document.querySelector('img');
             const newBtn = document.querySelector('#new');
             const search = document.querySelector('#search');
-            function fetchGIF(search){
+            async function fetchGIF(search){
                 console.log("https://api.giphy.com/v1/gifs/translate?api_key=N92NNbN51NswnY4JfSfQoubhhKXpmkOA&s=" + search);
-                fetch("https://api.giphy.com/v1/gifs/translate?api_key=N92NNbN51NswnY4JfSfQoubhhKXpmkOA&s=" + search, {mode: 'cors'})
-                    .then(function(response){
-                        return (response.json());
-                    })
-                    .then(function(response){
-                        if(response.data.images){
-                            img.src = response.data.images.original.url;
-                        }else{
-                            img.src = "https://image.shutterstock.com/image-photo/pug-dog-yellow-constructor-safety-260nw-645963085.jpg";
-                        }
-                    }).catch(error => {
-    console.error('There has been a problem with your fetch operation:', error);
-    });
+                let response = await fetch("https://api.giphy.com/v1/gifs/translate?api_key=N92NNbN51NswnY4JfSfQoubhhKXpmkOA&s=" + search, {mode: 'cors'});
+                let GIFdata = await response.json();
+                let imageURL = await GIFdata.data.images.original.url;
+                img.src = imageURL;
+    //                 .then(function(response){
+    //                     return (response.json());
+    //                 })
+    //                 .then(function(response){
+    //                     if(response.data.images){
+    //                         img.src = response.data.images.original.url;
+    //                     }else{
+    //                         img.src = "https://image.shutterstock.com/image-photo/pug-dog-yellow-constructor-safety-260nw-645963085.jpg";
+    //                     }
+    //                 }).catch(error => {
+    // console.error('There has been a problem with your fetch operation:', error);
+    // });
                 }
-                fetchGIF("ferret");
+                fetchGIF("ferret").catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
                 newBtn.addEventListener('click', function(){
                     fetchGIF(search.value);
                 })
