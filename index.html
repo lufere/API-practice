@@ -7,7 +7,14 @@
     <body>
         <img src = "#" />
         <script>
-            
+            const img = document.querySelector('img');
+                fetch('https://api.giphy.com/v1/gifs/translate?api_key=N92NNbN51NswnY4JfSfQoubhhKXpmkOA&s=ferret', {mode: 'cors'})
+                    .then(function(response){
+                        return (response.json());
+                    })
+                    .then(function(response){
+                        img.src = response.data.images.original.url;
+                    });
         </script>
     </body>
 </html>
