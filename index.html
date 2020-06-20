@@ -2,19 +2,31 @@
 <html>
     <head>
         <title>GIF API</title>
+        <button id = "new">NEW GIF</button>
+        <input id = "search"></input>
     </head>
 
     <body>
         <img src = "#" />
+
         <script>
             const img = document.querySelector('img');
-                fetch('https://api.giphy.com/v1/gifs/translate?api_key=N92NNbN51NswnY4JfSfQoubhhKXpmkOA&s=ferret', {mode: 'cors'})
+            const newBtn = document.querySelector('#new');
+            const search = document.querySelector('#search');
+            function fetchGIF(search){
+                console.log("https://api.giphy.com/v1/gifs/translate?api_key=N92NNbN51NswnY4JfSfQoubhhKXpmkOA&s=" + search);
+                fetch("https://api.giphy.com/v1/gifs/translate?api_key=N92NNbN51NswnY4JfSfQoubhhKXpmkOA&s=" + search, {mode: 'cors'})
                     .then(function(response){
                         return (response.json());
                     })
                     .then(function(response){
-                        img.src = response.data.images.original.url;
+                            img.src = response.data.images.original.url;
                     });
+                }
+                fetchGIF("ferret");
+                newBtn.addEventListener('click', function(){
+                    fetchGIF(search.value);
+                })
         </script>
     </body>
 </html>
