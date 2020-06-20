@@ -20,8 +20,14 @@
                         return (response.json());
                     })
                     .then(function(response){
+                        if(response.data.images){
                             img.src = response.data.images.original.url;
-                    });
+                        }else{
+                            img.src = "https://image.shutterstock.com/image-photo/pug-dog-yellow-constructor-safety-260nw-645963085.jpg";
+                        }
+                    }).catch(error => {
+    console.error('There has been a problem with your fetch operation:', error);
+    });
                 }
                 fetchGIF("ferret");
                 newBtn.addEventListener('click', function(){
